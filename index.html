@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thirty Years of Open-World Crime — A History</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #07080b;
+    --ink-2: #121620;
+    --ink-3: #1a1f2c;
+    --paper: #f1ede2;
+    --paper-dim: #b6b2a6;
+    --coral: #ff5a4e;
+    --teal: #23d3b8;
+    --amber: #ffb23e;
+    --violet: #8a6bff;
+    --line: rgba(241,237,226,0.14);
+    --line-strong: rgba(241,237,226,0.34);
+    --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --ink: #f3efe4; --ink-2: #ffffff; --ink-3: #e7e2d3;
+      --paper: #171512; --paper-dim: #5c584e;
+      --line: rgba(23,21,18,0.14); --line-strong: rgba(23,21,18,0.32);
+    }
+  }
+  :root[data-theme="light"] {
+    --ink: #f3efe4; --ink-2: #ffffff; --ink-3: #e7e2d3;
+    --paper: #171512; --paper-dim: #5c584e;
+    --line: rgba(23,21,18,0.14); --line-strong: rgba(23,21,18,0.32);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(64px + env(safe-area-inset-top,0px)); }
+  body {
+    background: var(--ink); color: var(--paper);
+    font-family: var(--font-body); line-height: 1.6;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  img, svg { max-width: 100%; display: block; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* film-grain overlay, used sparingly on dark scenes */
+  .grain { position: absolute; inset: 0; pointer-events: none; opacity: 0.18; mix-blend-mode: overlay; }
+
+  /* ---------- NAV ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 40;
+    padding-top: env(safe-area-inset-top,0px);
+    background: color-mix(in srgb, var(--ink) 85%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1080px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .brand { font-family: var(--font-display); font-size: 1.35rem; letter-spacing: 0.03em; white-space: nowrap; }
+  .brand span { color: var(--coral); }
+  nav.links { display: flex; gap: 22px; font-size: 0.85rem; font-weight: 600; overflow-x: auto; scrollbar-width: none; }
+  nav.links::-webkit-scrollbar { display: none; }
+  nav.links a { text-decoration: none; color: var(--paper-dim); white-space: nowrap; padding-bottom: 3px; border-bottom: 2px solid transparent; transition: color .2s ease, border-color .2s ease; }
+  nav.links a:hover, nav.links a:focus-visible { color: var(--paper); border-color: var(--teal); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative; padding: 100px 24px 0; overflow: hidden;
+    background: linear-gradient(180deg, #05070a 0%, #0d1420 55%, #14202b 100%);
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-scene { position: relative; height: clamp(360px, 62vw, 560px); }
+  .hero-sun {
+    position: absolute; left: 50%; top: 8%; width: 46%; aspect-ratio: 1;
+    transform: translateX(-50%);
+    background: radial-gradient(circle at 50% 45%, #ffd98a 0%, #ff8f5e 45%, #ff5a4e 70%, transparent 78%);
+    border-radius: 50%; filter: blur(1px);
+  }
+  .hero-sun::after {
+    content: ""; position: absolute; inset: 0; border-radius: 50%;
+    background: repeating-linear-gradient(180deg, transparent 0 6px, #0d1420 6px 11px);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 42%, black 55%);
+            mask-image: linear-gradient(180deg, transparent 0%, transparent 42%, black 55%);
+  }
+  .hero-grid {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 42%;
+    background:
+      linear-gradient(180deg, transparent, #05070a 92%),
+      repeating-linear-gradient(90deg, rgba(35,211,184,0.35) 0 1px, transparent 1px 60px),
+      repeating-linear-gradient(0deg, rgba(35,211,184,0.35) 0 1px, transparent 1px 22px);
+    transform: perspective(280px) rotateX(58deg);
+    transform-origin: bottom;
+  }
+  .hero-city { position: absolute; left: 0; right: 0; bottom: 12%; height: 46%; z-index: 2; }
+  .hero-title-wrap { position: relative; z-index: 3; max-width: 780px; margin: -18% auto 0; padding: 0 24px 80px; text-align: left; }
+  .eyebrow-tag {
+    display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 700;
+    color: var(--teal); background: color-mix(in srgb, var(--teal) 14%, #05070a);
+    border: 1px solid color-mix(in srgb, var(--teal) 40%, transparent);
+    padding: 6px 12px; border-radius: 3px; margin-bottom: 26px;
+  }
+  .eyebrow-tag::before { content: ""; width: 7px; height: 7px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
+  h1.hero-title {
+    font-family: var(--font-display); font-size: clamp(3rem, 9vw, 5.6rem); line-height: 0.96;
+    text-shadow: 0 6px 30px rgba(0,0,0,0.6);
+    opacity: 0; transform: translateY(18px); animation: riseIn .8s cubic-bezier(.2,.7,.2,1) .15s forwards;
+  }
+  h1.hero-title em { font-style: normal; color: var(--paper-dim); }
+  .hero-sub {
+    margin-top: 22px; max-width: 54ch; font-size: 1.12rem; color: var(--paper-dim);
+    opacity: 0; animation: riseIn .8s cubic-bezier(.2,.7,.2,1) .32s forwards;
+  }
+  .hero-meta {
+    margin-top: 36px; display: flex; gap: 28px; flex-wrap: wrap;
+    opacity: 0; animation: riseIn .8s cubic-bezier(.2,.7,.2,1) .48s forwards;
+  }
+  .hero-meta div { font-size: 0.82rem; color: var(--paper-dim); }
+  .hero-meta strong { display: block; font-family: var(--font-display); font-size: 1.6rem; color: var(--paper); letter-spacing: 0.02em; }
+  @keyframes riseIn { to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) { h1.hero-title, .hero-sub, .hero-meta { animation: none !important; opacity: 1 !important; transform: none !important; } }
+
+  /* ---------- INTRO ---------- */
+  .intro { padding: 64px 24px; border-bottom: 1px solid var(--line); }
+  .intro .wrap { max-width: 700px; }
+  .intro p { font-size: 1.15rem; color: var(--paper-dim); }
+  .intro p + p { margin-top: 16px; }
+  .intro strong { color: var(--paper); font-weight: 700; }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline-section { padding: 72px 24px 40px; position: relative; }
+  .timeline-head { max-width: 1080px; margin: 0 auto 56px; }
+  .timeline-head .kicker { font-size: 0.8rem; font-weight: 700; color: var(--coral); margin-bottom: 10px; }
+  .timeline-head h2 { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem); max-width: 22ch; }
+
+  .timeline { max-width: 1080px; margin: 0 auto; position: relative; }
+  .spine { position: absolute; left: 24px; top: 0; bottom: 0; width: 3px; background: repeating-linear-gradient(to bottom, var(--line-strong) 0 10px, transparent 10px 20px); }
+  .spine-fill { position: absolute; left: 24px; top: 0; width: 3px; height: 0%; background: linear-gradient(to bottom, var(--coral), var(--teal)); transition: height .1s linear; }
+  @media (min-width: 760px) { .spine, .spine-fill { left: 50%; margin-left: -1.5px; } }
+
+  .era { position: relative; padding: 0 0 84px 64px; }
+  .era:last-child { padding-bottom: 8px; }
+  .era-dot {
+    position: absolute; left: 24px; top: 4px; width: 15px; height: 15px; border-radius: 50%;
+    background: var(--ink); border: 3px solid var(--line-strong); transform: translateX(-50%);
+    transition: border-color .3s ease, background .3s ease; z-index: 2;
+  }
+  .era.active .era-dot { border-color: var(--coral); background: var(--coral); }
+  @media (min-width: 760px) {
+    .era { width: 50%; padding: 0 0 96px 0; }
+    .era-dot { left: 0; }
+    .era:nth-child(odd) { padding-right: 56px; text-align: right; }
+    .era:nth-child(even) { margin-left: 50%; padding-left: 56px; }
+    .era:nth-child(odd) .era-dot { left: auto; right: -8px; transform: none; }
+    .era:nth-child(even) .era-dot { left: -8px; transform: none; }
+    .era:nth-child(odd) .era-card { margin-left: auto; }
+    .era:nth-child(odd) .game-fact { justify-content: flex-end; text-align: right; }
+  }
+
+  .era-years { font-family: var(--font-display); font-size: 2.6rem; letter-spacing: 0.02em; line-height: 1; color: var(--paper-dim); }
+  .era.active .era-years { color: var(--paper); }
+
+  .era-scene { position: relative; margin-top: 14px; border-radius: 8px; overflow: hidden; height: 150px; border: 1px solid var(--line); }
+  .era-scene svg { width: 100%; height: 100%; display: block; }
+
+  .era-card { margin-top: 12px; max-width: 460px; background: var(--ink-2); border: 1px solid var(--line); border-radius: 8px; padding: 24px 26px 22px; }
+  .era-card h3 { font-family: var(--font-display); font-size: 1.55rem; letter-spacing: 0.02em; margin-bottom: 10px; }
+  .era-card > p.era-blurb { color: var(--paper-dim); font-size: 0.98rem; margin-bottom: 18px; }
+  .game-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .game-fact { display: flex; gap: 10px; align-items: baseline; font-size: 0.92rem; }
+  .game-fact .yr { flex-shrink: 0; font-weight: 700; color: var(--teal); min-width: 3.2em; }
+  .game-fact .body-text b { color: var(--paper); }
+  .game-fact .body-text { color: var(--paper-dim); }
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+  .badge { font-size: 0.72rem; font-weight: 700; padding: 4px 9px; border-radius: 3px; border: 1px solid var(--line-strong); color: var(--paper-dim); }
+  @media (min-width: 760px) { .era:nth-child(odd) .badge-row { justify-content: flex-end; } }
+
+  /* ---------- STATS ---------- */
+  .stats { padding: 72px 24px; background: var(--ink-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .stats-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 40px 24px; }
+  @media (min-width: 700px) { .stats-grid { grid-template-columns: repeat(4,1fr); } }
+  .stat b { display: block; font-family: var(--font-display); font-size: clamp(2.1rem, 6vw, 3.1rem); line-height: 1; background: linear-gradient(90deg, var(--coral), var(--amber)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stat span { display: block; margin-top: 8px; font-size: 0.85rem; color: var(--paper-dim); max-width: 22ch; }
+
+  /* ---------- NEXT CHAPTER ---------- */
+  .next { position: relative; padding: 0; overflow: hidden; border-bottom: 1px solid var(--line); background: #060a10; }
+  .next-scene { position: relative; height: clamp(260px, 46vw, 420px); }
+  .next-content { position: relative; z-index: 3; padding: 64px 24px 88px; margin-top: -14%; }
+  .next .wrap { max-width: 760px; }
+  .next .kicker { font-size: 0.8rem; font-weight: 700; color: var(--teal); margin-bottom: 14px; }
+  .next h2 { font-family: var(--font-display); font-size: clamp(2.2rem, 6vw, 3.4rem); max-width: 16ch; margin-bottom: 20px; text-shadow: 0 6px 30px rgba(0,0,0,0.6); }
+  .next p { color: var(--paper-dim); font-size: 1.05rem; max-width: 58ch; }
+  .next p + p { margin-top: 14px; }
+  .next-panel { margin-top: 34px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); }
+  .next-item { border: 1px solid var(--line-strong); border-radius: 8px; padding: 16px 18px; background: color-mix(in srgb, var(--ink-2) 60%, transparent); backdrop-filter: blur(6px); }
+  .next-item .lbl { font-size: 0.74rem; color: var(--paper-dim); margin-bottom: 6px; }
+  .next-item .val { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: 0.01em; }
+
+  /* ---------- FOOTER ---------- */
+  footer { padding: 48px 24px 64px; }
+  footer .wrap { max-width: 700px; }
+  footer p { color: var(--paper-dim); font-size: 0.85rem; }
+  footer p + p { margin-top: 10px; }
+  footer .fbrand { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 14px; }
+
+  ::selection { background: var(--coral); color: #fff; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">OPEN<span>WORLD</span>.HISTORY</div>
+    <nav class="links">
+      <a href="#origins">Origins</a>
+      <a href="#three-d">3D Era</a>
+      <a href="#golden">Golden Age</a>
+      <a href="#realism">Realism</a>
+      <a href="#modern">Modern Era</a>
+      <a href="#next">GTA VI</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-scene">
+    <div class="hero-sun"></div>
+    <svg class="hero-city" viewBox="0 0 1200 260" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,260 0,150 30,150 30,120 60,120 60,160 95,160 95,90 130,90 130,170 165,170 165,110 195,110 195,180 235,180 235,60 260,60 260,190 300,190 300,130 335,130 335,200 375,200 375,100 405,100 405,175 440,175 440,140 475,140 475,205 515,205 515,80 545,80 545,190 585,190 585,150 620,150 620,210 660,210 660,95 690,95 690,185 725,185 725,155 760,155 760,215 800,215 800,120 830,120 830,195 870,195 870,165 905,165 905,220 945,220 945,105 975,105 975,200 1015,200 1015,170 1050,170 1050,230 1090,230 1090,140 1120,140 1120,210 1160,210 1160,180 1200,180 1200,260" fill="#0a0e16"/>
+      <g fill="#ffd98a" opacity="0.55">
+        <rect x="70" y="130" width="6" height="8"/><rect x="82" y="130" width="6" height="8"/>
+        <rect x="140" y="180" width="6" height="8"/><rect x="152" y="180" width="6" height="8"/>
+        <rect x="245" y="72" width="6" height="8"/><rect x="245" y="90" width="6" height="8"/>
+        <rect x="345" y="140" width="6" height="8"/><rect x="345" y="160" width="6" height="8"/>
+        <rect x="525" y="95" width="6" height="8"/><rect x="525" y="115" width="6" height="8"/>
+        <rect x="670" y="105" width="6" height="8"/><rect x="670" y="125" width="6" height="8"/>
+        <rect x="810" y="135" width="6" height="8"/><rect x="810" y="155" width="6" height="8"/>
+        <rect x="955" y="118" width="6" height="8"/><rect x="955" y="138" width="6" height="8"/>
+        <rect x="1100" y="152" width="6" height="8"/><rect x="1100" y="172" width="6" height="8"/>
+      </g>
+    </svg>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-title-wrap">
+    <div class="eyebrow-tag">A history in six eras</div>
+    <h1 class="hero-title">Thirty years of<br>digital <em>crime.</em></h1>
+    <p class="hero-sub">A small Scottish studio built a top-down game about stealing cars in 1997. What followed was a two-and-a-half-decade rewrite of what an open world could be — and one of the most valuable entertainment franchises ever made.</p>
+    <div class="hero-meta">
+      <div><strong>1997</strong>Where it started</div>
+      <div><strong>6</strong>Eras of reinvention</div>
+      <div><strong>2026</strong>The next chapter</div>
+    </div>
+  </div>
+</section>
+
+<section class="intro">
+  <div class="wrap">
+    <p><strong>Grand Theft Auto</strong> did not invent crime games, but it invented a template almost every open-world game since has borrowed from: a city that keeps living whether or not you engage with it, and a story told through the freedom to ignore it.</p>
+    <p>This is the shape of that history — from a bird's-eye car-theft sim made in Dundee to a fictional Florida the whole industry is currently waiting on. Every scene below is an original illustration built for this page, not game footage.</p>
+  </div>
+</section>
+
+<section class="timeline-section">
+  <div class="timeline-head wrap">
+    <div class="kicker">The eras</div>
+    <h2>Six reinventions of the same idea.</h2>
+  </div>
+
+  <div class="timeline" id="timeline">
+    <div class="spine"></div>
+    <div class="spine-fill" id="spineFill"></div>
+
+    <article class="era" id="origins">
+      <div class="era-dot"></div>
+      <div class="era-years">1997–99</div>
+      <div class="era-card">
+        <div class="era-scene">
+          <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="150" fill="#1c2333"/>
+            <g fill="#2c3654">
+              <rect x="0" y="0" width="400" height="18" /><rect x="0" y="42" width="400" height="18" /><rect x="0" y="84" width="400" height="18" /><rect x="0" y="126" width="400" height="18" />
+              <rect x="0" y="0" width="18" height="150" /><rect x="76" y="0" width="18" height="150" /><rect x="152" y="0" width="18" height="150" /><rect x="228" y="0" width="18" height="150" /><rect x="304" y="0" width="18" height="150" /><rect x="380" y="0" width="18" height="150" />
+            </g>
+            <rect x="30" y="55" width="30" height="16" rx="2" fill="#ff5a4e"/>
+            <rect x="180" y="97" width="30" height="16" rx="2" fill="#23d3b8"/>
+            <rect x="330" y="13" width="30" height="16" rx="2" fill="#ffb23e"/>
+            <rect x="255" y="55" width="30" height="16" rx="2" fill="#f1ede2" opacity="0.7"/>
+          </svg>
+        </div>
+        <h3>Top-Down Origins</h3>
+        <p class="era-blurb">Built by DMA Design in Dundee, Scotland, the original games were played from directly above — closer to a board game than a movie — and were flagged by parts of the press for rewarding, rather than punishing, lawbreaking.</p>
+        <ul class="game-list">
+          <li class="game-fact"><span class="yr">1997</span><span class="body-text"><b>Grand Theft Auto</b> — three fictional cities, missions dialled in from a payphone, and a moral panic that gave the series more publicity than any ad campaign could.</span></li>
+          <li class="game-fact"><span class="yr">1997</span><span class="body-text"><b>GTA: London 1969</b> — a standalone expansion swapping the setting for Swinging London, right down to left-hand traffic.</span></li>
+          <li class="game-fact"><span class="yr">1999</span><span class="body-text"><b>Grand Theft Auto 2</b> — added a reputation system tied to rival gangs, in a stylised near-future setting called Anywhere City.</span></li>
+        </ul>
+        <div class="badge-row"><span class="badge">DMA Design</span><span class="badge">2D, top-down</span><span class="badge">PC / PS1</span></div>
+      </div>
+    </article>
+
+    <article class="era" id="three-d">
+      <div class="era-dot"></div>
+      <div class="era-years">2001–02</div>
+      <div class="era-card">
+        <div class="era-scene">
+          <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="150" fill="#0c0e13"/>
+            <polygon points="0,150 0,95 20,95 20,70 45,70 45,105 75,105 75,50 100,50 100,115 130,115 130,60 155,60 155,120 185,120 185,40 210,40 210,110 240,110 240,80 265,80 265,130 295,130 295,55 320,55 320,100 350,100 350,75 380,75 380,120 400,120 400,150" fill="#1a1f2c"/>
+            <g fill="#ffd98a" opacity="0.6">
+              <circle cx="30" cy="85" r="1.6"/><circle cx="60" cy="88" r="1.6"/><circle cx="90" cy="70" r="1.6"/><circle cx="115" cy="95" r="1.6"/><circle cx="145" cy="80" r="1.6"/><circle cx="200" cy="65" r="1.6"/><circle cx="255" cy="100" r="1.6"/><circle cx="305" cy="75" r="1.6"/><circle cx="360" cy="95" r="1.6"/>
+            </g>
+            <polygon points="190,150 205,15 220,150" fill="#ff5a4e" opacity="0.12"/>
+            <line x1="205" y1="15" x2="205" y2="150" stroke="#ff5a4e" stroke-width="1" opacity="0.5"/>
+          </svg>
+        </div>
+        <h3>The Third Dimension</h3>
+        <p class="era-blurb">DMA Design became Rockstar North, and the series jumped into full 3D. This is the two-year stretch most people mean when they talk about GTA "changing everything."</p>
+        <ul class="game-list">
+          <li class="game-fact"><span class="yr">2001</span><span class="body-text"><b>Grand Theft Auto III</b> — the first fully 3D open world in the series, a silent protagonist, and a template for an entire genre that followed.</span></li>
+          <li class="game-fact"><span class="yr">2002</span><span class="body-text"><b>Vice City</b> — an '80s Miami pastiche with a voiced lead, a wardrobe, real estate to buy, and a licensed soundtrack spanning nine in-game radio stations.</span></li>
+        </ul>
+        <div class="badge-row"><span class="badge">Rockstar North</span><span class="badge">First 3D open world</span><span class="badge">PS2 era</span></div>
+      </div>
+    </article>
+
+    <article class="era" id="golden">
+      <div class="era-dot"></div>
+      <div class="era-years">2004–06</div>
+      <div class="era-card">
+        <div class="era-scene">
+          <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="150" fill="#2a1f2e"/>
+            <polygon points="0,150 0,110 60,60 130,110 190,55 260,110 330,65 400,110 400,150" fill="#3d2a3f"/>
+            <polygon points="0,150 0,130 50,95 100,130 160,90 220,130 290,100 350,130 400,120 400,150" fill="#54365a"/>
+            <g stroke="#8a6bff" stroke-width="2" opacity="0.7">
+              <line x1="70" y1="60" x2="70" y2="14"/><line x1="70" y1="14" x2="58" y2="30"/><line x1="70" y1="14" x2="82" y2="30"/>
+            </g>
+            <rect x="220" y="90" width="14" height="60" fill="#1c1420"/>
+            <rect x="238" y="70" width="14" height="80" fill="#1c1420"/>
+            <rect x="256" y="100" width="14" height="50" fill="#1c1420"/>
+          </svg>
+        </div>
+        <h3>The Golden Age</h3>
+        <p class="era-blurb">The series went bigger — a whole fictional state instead of one city — while quietly filling out a handheld side-catalogue most players never touched.</p>
+        <ul class="game-list">
+          <li class="game-fact"><span class="yr">2004</span><span class="body-text"><b>San Andreas</b> — three cities across one state, RPG-style stats, gang territory wars, and one of the best-selling console games ever made.</span></li>
+          <li class="game-fact"><span class="yr">2004</span><span class="body-text"><b>GTA Advance</b> — a top-down spin-off built for the Game Boy Advance.</span></li>
+          <li class="game-fact"><span class="yr">2005–06</span><span class="body-text"><b>Liberty City & Vice City Stories</b> — PSP prequels revisiting earlier cities with new protagonists, later ported back to PS2.</span></li>
+        </ul>
+        <div class="badge-row"><span class="badge">One state, three cities</span><span class="badge">RPG stats</span><span class="badge">PS2 / PSP</span></div>
+      </div>
+    </article>
+
+    <article class="era" id="realism">
+      <div class="era-dot"></div>
+      <div class="era-years">2008–09</div>
+      <div class="era-card">
+        <div class="era-scene">
+          <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="fog" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#3a4048"/><stop offset="100%" stop-color="#171a1f"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="150" fill="url(#fog)"/>
+            <polygon points="0,150 0,80 25,80 25,50 55,50 55,95 90,95 90,30 120,30 120,105 155,105 155,45 185,45 185,115 220,115 220,20 250,20 250,100 285,100 285,60 315,60 315,120 350,120 350,40 380,40 380,110 400,110 400,150" fill="#0e1013" opacity="0.9"/>
+            <g stroke="#c7ccd1" stroke-width="1" opacity="0.35">
+              <line x1="0" y1="30" x2="400" y2="45"/><line x1="0" y1="70" x2="400" y2="60"/><line x1="0" y1="100" x2="400" y2="95"/>
+            </g>
+          </svg>
+        </div>
+        <h3>The Realism Era</h3>
+        <p class="era-blurb">A new engine and a new console generation pushed the series toward weight and consequence — heavier physics, a grimmer story, and a reimagined Liberty City standing in for New York.</p>
+        <ul class="game-list">
+          <li class="game-fact"><span class="yr">2008</span><span class="body-text"><b>Grand Theft Auto IV</b> — a new physics and animation engine, and immigrant Niko Bellic's more grounded, satirical take on the American dream.</span></li>
+          <li class="game-fact"><span class="yr">2009</span><span class="body-text"><b>Episodes from Liberty City</b> — two episodic expansions, The Lost and Damned and The Ballad of Gay Tony, later packaged as a standalone release.</span></li>
+          <li class="game-fact"><span class="yr">2009</span><span class="body-text"><b>Chinatown Wars</b> — a handheld return to the top-down view, built around touchscreen minigames.</span></li>
+        </ul>
+        <div class="badge-row"><span class="badge">New physics engine</span><span class="badge">Liberty City rebuilt</span><span class="badge">Xbox 360 / PS3</span></div>
+      </div>
+    </article>
+
+    <article class="era" id="modern">
+      <div class="era-dot"></div>
+      <div class="era-years">2013–</div>
+      <div class="era-card">
+        <div class="era-scene">
+          <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sunset2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ff8f5e"/><stop offset="55%" stop-color="#ff5a4e"/><stop offset="100%" stop-color="#3a1f3f"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="150" fill="url(#sunset2)"/>
+            <circle cx="330" cy="35" r="26" fill="#ffe4b0" opacity="0.9"/>
+            <polygon points="0,150 0,120 20,120 20,85 40,85 40,130 65,130 65,60 85,60 85,140 115,140 115,95 140,95 140,150" fill="#160b18"/>
+            <g stroke="#160b18" stroke-width="6" stroke-linecap="round">
+              <line x1="190" y1="150" x2="188" y2="70"/><line x1="215" y1="150" x2="217" y2="55"/><line x1="240" y1="150" x2="238" y2="75"/>
+            </g>
+            <g fill="#160b18" opacity="0.9">
+              <ellipse cx="188" cy="65" rx="16" ry="8"/><ellipse cx="217" cy="50" rx="18" ry="9"/><ellipse cx="238" cy="70" rx="15" ry="7"/>
+            </g>
+            <polygon points="280,150 280,100 300,100 300,60 320,60 320,110 345,110 345,40 365,40 365,120 385,120 385,80 400,80 400,150" fill="#160b18"/>
+          </svg>
+        </div>
+        <h3>The Modern Era</h3>
+        <p class="era-blurb">One game has now spanned three console generations without a numbered sequel — because its online mode turned out to be the more valuable product.</p>
+        <ul class="game-list">
+          <li class="game-fact"><span class="yr">2013</span><span class="body-text"><b>Grand Theft Auto V</b> — three interlocking protagonists across a fictional Los Santos and Blaine County, standing in for Southern California.</span></li>
+          <li class="game-fact"><span class="yr">2013</span><span class="body-text"><b>GTA Online</b> — a persistent multiplayer mode that grew, through a decade of continuous updates, into the series' primary source of revenue.</span></li>
+          <li class="game-fact"><span class="yr">2014–22</span><span class="body-text"><b>Three re-releases</b> — the same base game rebuilt for PS4/Xbox One, PC, and finally PS5/Xbox Series in an "Expanded and Enhanced" edition.</span></li>
+        </ul>
+        <div class="badge-row"><span class="badge">Three console generations</span><span class="badge">Live-service online mode</span><span class="badge">230M+ copies</span></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat"><b>1997</b><span>The year the series began, in Dundee, Scotland</span></div>
+      <div class="stat"><b>230M+</b><span>Copies of GTA V sold as of mid-2026</span></div>
+      <div class="stat"><b>~500M</b><span>Units sold across the whole franchise to date</span></div>
+      <div class="stat"><b>13yrs</b><span>And counting, since GTA V's original release</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="next" id="next">
+  <div class="next-scene">
+    <svg viewBox="0 0 1200 260" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;">
+      <defs>
+        <linearGradient id="nightGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0a1a22"/><stop offset="100%" stop-color="#06090c"/>
+        </linearGradient>
+        <linearGradient id="neonGlow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#23d3b8" stop-opacity="0.55"/><stop offset="100%" stop-color="#23d3b8" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="260" fill="url(#nightGrad)"/>
+      <rect x="0" y="60" width="1200" height="60" fill="url(#neonGlow)"/>
+      <polygon points="0,260 0,170 40,170 40,130 80,130 80,190 130,190 130,90 175,90 175,205 225,205 225,110 270,110 270,215 320,215 320,70 360,70 360,195 410,195 410,140 460,140 460,225 515,225 515,100 560,100 560,200 610,200 610,150 660,150 660,230 715,230 715,120 760,120 760,210 810,210 810,160 855,160 855,235 905,235 905,105 950,105 950,215 1000,215 1000,175 1045,175 1045,240 1095,240 1095,130 1140,130 1140,220 1200,220 1200,260" fill="#050708"/>
+      <g stroke="#ff5a4e" stroke-width="1.4" opacity="0.65">
+        <line x1="130" y1="90" x2="130" y2="55"/><line x1="320" y1="70" x2="320" y2="30"/><line x1="515" y1="100" x2="515" y2="60"/><line x1="905" y1="105" x2="905" y2="65"/>
+      </g>
+      <g fill="#ffb23e" opacity="0.75">
+        <circle cx="60" cy="150" r="1.5"/><circle cx="105" cy="160" r="1.5"/><circle cx="200" cy="140" r="1.5"/><circle cx="245" cy="180" r="1.5"/><circle cx="340" cy="150" r="1.5"/><circle cx="430" cy="170" r="1.5"/><circle cx="480" cy="160" r="1.5"/><circle cx="580" cy="180" r="1.5"/><circle cx="630" cy="165" r="1.5"/><circle cx="735" cy="170" r="1.5"/><circle cx="825" cy="185" r="1.5"/><circle cx="925" cy="150" r="1.5"/><circle cx="1020" cy="195" r="1.5"/><circle cx="1115" cy="155" r="1.5"/>
+      </g>
+    </svg>
+  </div>
+  <div class="next-content wrap">
+    <div class="kicker">The next chapter</div>
+    <h2>Grand Theft Auto VI</h2>
+    <p>Announced in December 2023 with a trailer that broke online video-viewing records within its first day, GTA VI moves the series to the fictional state of Leonida — including a reimagined, present-day Vice City — told through two playable leads, Jason and Lucia.</p>
+    <p>Originally aimed at a 2025 window, the release has since shifted twice, with Rockstar most recently setting the date for November 19, 2026, citing the extra time needed to finish the game at the standard the series is known for.</p>
+    <div class="next-panel">
+      <div class="next-item"><div class="lbl">Setting</div><div class="val">Leonida</div></div>
+      <div class="next-item"><div class="lbl">Leads</div><div class="val">Jason & Lucia</div></div>
+      <div class="next-item"><div class="lbl">Announced</div><div class="val">Dec 2023</div></div>
+      <div class="next-item"><div class="lbl">Release date</div><div class="val">Nov 19, 2026</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fbrand">OPEN<span style="color:var(--coral)">WORLD</span>.HISTORY</div>
+    <p>An independent, fan-made retrospective. All names, dates, and figures refer to publicly reported facts about the Grand Theft Auto series; no game art, screenshots, or logos are used or reproduced here — every visual on this page, including all illustrated scenes, is original.</p>
+    <p>Grand Theft Auto is a trademark of Take-Two Interactive / Rockstar Games. This page is not affiliated with or endorsed by either company.</p>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var timeline = document.getElementById('timeline');
+  var spineFill = document.getElementById('spineFill');
+  var eras = Array.prototype.slice.call(document.querySelectorAll('.era'));
+
+  function onScroll() {
+    if (!timeline) return;
+    var rect = timeline.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var total = rect.height;
+    var scrolled = Math.min(Math.max(vh * 0.5 - rect.top, 0), total);
+    var pct = total > 0 ? (scrolled / total) * 100 : 0;
+    spineFill.style.height = pct + '%';
+
+    eras.forEach(function(era) {
+      var r = era.getBoundingClientRect();
+      if (r.top < vh * 0.6 && r.bottom > vh * 0.15) {
+        era.classList.add('active');
+      } else {
+        era.classList.remove('active');
+      }
+    });
+  }
+
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(function() { onScroll(); ticking = false; });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
